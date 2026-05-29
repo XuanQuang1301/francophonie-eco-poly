@@ -1,0 +1,6 @@
+{
+  "name": "Francophonie Eco-Poly",
+  "description": "An eco-educational Monopoly board game designed for learning SDGs (ODD) across French-speaking countries and monuments, supporting multi-player gameplay, dice rolls, property purchases, and ecological challenges.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,138 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,500;0,600;0,700;0,800;1,700&family=Inter:wght@400;500;600;700&display=swap');
+
+@layer base {
+  body { font-family: 'Inter', system-ui, sans-serif; }
+}
+
+@theme {
+  --font-display: "Plus Jakarta Sans", "Inter", sans-serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+/* ── Animated gradient background ───────────────────────────── */
+@keyframes gradientBg {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animated-bg {
+  background: linear-gradient(-45deg, #fdf4ff, #eff6ff, #f0fdf4, #fff7ed);
+  background-size: 400% 400%;
+  animation: gradientBg 18s ease infinite;
+}
+
+/* ── 9×9 Board grid (32 spaces + hollow center) ─────────────── */
+.board-grid {
+  display: grid;
+  grid-template-columns: 2fr repeat(7, 1fr) 2fr;
+  grid-template-rows:    2fr repeat(7, 1fr) 2fr;
+  gap: 3px;
+  aspect-ratio: 1/1;
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  background-color: #94a3b8;
+  padding: 5px;
+  border: 8px solid #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 24px 48px -12px rgba(79, 70, 229, 0.18), 0 0 30px rgba(0,0,0,0.06);
+}
+
+/* ── Individual tile ────────────────────────────────────────── */
+.tile {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.18s ease;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.tile:hover {
+  transform: translateY(-2px);
+  z-index: 10;
+  box-shadow: 0 6px 12px -2px rgba(0,0,0,0.12);
+}
+.corner-tile {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+/* ── Hollow center (columns 2-8, rows 2-8) ───────────────────── */
+.hollow-center {
+  grid-column: 2 / 9;
+  grid-row: 2 / 9;
+  background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(241,245,249,0.85) 100%);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* ── Dice roll animation ─────────────────────────────────────── */
+@keyframes roll-3d {
+  0%   { transform: scale(0.8) rotate(0deg); }
+  25%  { transform: scale(1.2) rotate(90deg); }
+  50%  { transform: scale(0.9) rotate(180deg); }
+  75%  { transform: scale(1.15) rotate(270deg); }
+  100% { transform: scale(1) rotate(360deg); }
+}
+.animate-dice-roll { animation: roll-3d 0.55s cubic-bezier(0.175,0.885,0.32,1.275); }
+
+/* ── Stamp animation ─────────────────────────────────────────── */
+@keyframes stamp-drop {
+  0%   { transform: scale(2) rotate(-15deg); opacity: 0; }
+  60%  { transform: scale(0.9) rotate(2deg); opacity: 1; }
+  80%  { transform: scale(1.05) rotate(-1deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.animate-stamp { animation: stamp-drop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+/* ── Pulse glow (active player) ─────────────────────────────── */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(99,102,241,0.4); }
+  50%       { box-shadow: 0 0 0 8px rgba(99,102,241,0); }
+}
+.pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+/* ── Floating in world map ───────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+.animate-float { animation: float 3s ease-in-out infinite; }
+
+/* ── Slow spin (for star/passport accents) ───────────────────── */
+@keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.animate-spin-slow { animation: spin-slow 8s linear infinite; }
+
+/* ── Card flip ───────────────────────────────────────────────── */
+.perspective { perspective: 1000px; }
+.card-3d     { transform-style: preserve-3d; transition: transform 0.6s ease; }
+.card-3d.flipped { transform: rotateY(180deg); }
+.card-face   { backface-visibility: hidden; }
+.card-back   { transform: rotateY(180deg); }
+
+/* ── Progress bar smooth ─────────────────────────────────────── */
+.progress-bar { transition: width 0.3s ease; }
+
+/* ── Region color bands ─────────────────────────────────────── */
+.band-top    { position: absolute; top: 0; left: 0; width: 100%; height: 14px; }
+.band-bottom { position: absolute; bottom: 0; left: 0; width: 100%; height: 14px; }
+.band-left   { position: absolute; left: 0; top: 0; width: 14px; height: 100%; }
+.band-right  { position: absolute; right: 0; top: 0; width: 14px; height: 100%; }
+
+/* ── Scrollbar styling ───────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
